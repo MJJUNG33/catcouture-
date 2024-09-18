@@ -1,0 +1,48 @@
+.product-image {
+  width: 100%;
+  height: auto;
+}
+
+.product {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 1rem;
+  justify-content: space-between;
+}
+
+.badge {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: rgb(247, 41, 41);
+  text-decoration: underline;
+  margin-top: 0.5rem;
+}
+
+.button {
+  background-color: black;
+  color: white;
+  padding: 0.5rem;
+  font-size: 1.25rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  margin-top: 0.5rem;
+}
+
+@media only screen and (min-width: 64rem) {
+  .product {
+    margin: 1rem;
+  }
+
+  .button {
+    font-size: 2rem;
+    padding: 1rem;
+  }
+}

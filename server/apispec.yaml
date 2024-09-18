@@ -1,0 +1,261 @@
+openapi: 3.0.2
+info:
+  version: '1.0'
+  title: Welcome to the Products API!
+  description: This API allows users to handle products
+  contact:
+    name: catcouture
+    url: 'https://cat-couture-client-tbfp.onrender.com'
+    email: support.contact@catcouture.com
+  license:
+    url: 'https://creativecommons.org/licenses/by-sa/4.0/'
+    name: Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
+servers:
+  - url: 'http://localhost:5001/api'
+    description: Development server
+  - url: 'https://cat-couture-qibb.onrender.com/api'
+    description: Production server
+paths:
+  /products:
+    get:
+      tags:
+        - products
+      summary: Returns a list of products
+      description: Get a list of products
+      operationId: get-products
+      parameters:
+        - name: limit
+          in: query
+          description: The number of products to return
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 10
+            maximum: 100
+        - name: page
+          in: query
+          description: The page number.
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+            maximum: 10
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  products:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Product'
+                  currentPage:
+                    type: integer
+                  totalPages:
+                    type: integer
+                  itemsPerPage:
+                    type: integer
+                  totalItems:
+                    type: integer
+                required:
+                  - products
+                  - currentPage
+                  - totalPages
+                  - itemsPerPage
+                  - totalItems
+              examples:
+                Example:
+                  value:
+                    products:
+                      - id: 1
+                        name: Angel Wings Harness
+                        description: The purrrfect accessory to take your kitty to the next level.
+                        price: $10.00
+                        categoryName: Accessories
+                        imageName: cat-photo_0000.jpg
+                        imageDescription: Wings harness
+                        discountValue: 10
+                        discountType: percentage off
+                      - id: 2
+                        name: Deluxe Carry Bag Orange
+                        description: Backpack-style carry bag with dome.
+                        price: $20.00
+                        categoryName: Accessories
+                        imageName: cat-photo_0001.jpg
+                        imageDescription: Carry Bag Deluxe
+                        discountValue: null
+                        discountType: null
+                    currentPage: 1
+                    totalPages: 10
+                    itemsPerPage: 10
+                    totalItems: 100
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Example 1:
+                  value:
+                    message: Bad Request
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Example 1:
+                  value:
+                    message: Internal Server Error
+      servers:
+        - url: 'http://localhost:5001/api'
+          description: Development server
+  /reports:
+    get:
+      tags:
+        - reports
+      summary: Returns a list of reports
+      description: Get a list of reports
+      operationId: get-reports
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  categoryReport:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        categoryName:
+                          type: string
+                        totalProducts:
+                          type: integer
+                        discountedProducts:
+                          type: integer
+                      required:
+                        - categoryName
+                        - totalProducts
+                        - discountedProducts
+                  discountReport:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        discountType:
+                          type: string
+                          nullable: true
+                        totalProducts:
+                          type: integer
+                      required:
+                        - discountType
+                        - totalProducts
+              examples:
+                Example:
+                  value:
+                    categoryReport:
+                      - categoryName: Hats
+                        totalProducts: 1
+                        discountedProducts: 0
+                      - categoryName: Shoes
+                        totalProducts: 1
+                        discountedProducts: 0
+                    discountReport:
+                      - discountType: null
+                        totalProducts: 91
+                      - discountType: percentage off
+                        totalProducts: 4
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Example:
+                  value:
+                    message: Unauthenticated
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Example:
+                  value:
+                    message: Unauthorized
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Example:
+                  value:
+                    message: Internal Server Error
+      servers:
+        - url: 'http://localhost:5001/api'
+          description: Development server
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        price:
+          type: string
+        categoryName:
+          type: string
+          nullable: true
+        imageName:
+          type: string
+          nullable: true
+        imageDescription:
+          type: string
+          nullable: true
+        discountValue:
+          type: number
+          nullable: true
+        discountType:
+          type: string
+          nullable: true
+      required:
+        - id
+        - name
+        - description
+        - price
+        - categoryName
+        - imageName
+        - imageDescription
+        - discountValue
+        - discountType
+    Error:
+      description: Error response body
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
+tags:
+  - name: products
+    description: Operations related to products
+  - name: reports
+    description: Operations related to reports
