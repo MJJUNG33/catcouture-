@@ -1,19 +1,19 @@
 openapi: 3.0.2
 info:
-  version: '1.0'
+  version: "1.0"
   title: Welcome to the Products API!
   description: This API allows users to handle products
   contact:
     name: catcouture
-    url: 'https://cat-couture-client-tbfp.onrender.com'
+    url: ""
     email: support.contact@catcouture.com
   license:
-    url: 'https://creativecommons.org/licenses/by-sa/4.0/'
+    url: "https://creativecommons.org/licenses/by-sa/4.0/"
     name: Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
 servers:
-  - url: 'http://localhost:5001/api'
+  - url: "http://localhost:5001/api"
     description: Development server
-  - url: 'https://cat-couture-qibb.onrender.com/api'
+  - url: "https://catcouture-gsl6.onrender.com"
     description: Production server
 paths:
   /products:
@@ -43,7 +43,7 @@ paths:
             default: 1
             maximum: 10
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
@@ -53,7 +53,7 @@ paths:
                   products:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Product'
+                      $ref: "#/components/schemas/Product"
                   currentPage:
                     type: integer
                   totalPages:
@@ -94,28 +94,28 @@ paths:
                     totalPages: 10
                     itemsPerPage: 10
                     totalItems: 100
-        '400':
+        "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
               examples:
                 Example 1:
                   value:
                     message: Bad Request
-        '500':
+        "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
               examples:
                 Example 1:
                   value:
                     message: Internal Server Error
       servers:
-        - url: 'http://localhost:5001/api'
+        - url: "http://localhost:5001/api"
           description: Development server
   /reports:
     get:
@@ -125,7 +125,7 @@ paths:
       description: Get a list of reports
       operationId: get-reports
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
@@ -175,38 +175,38 @@ paths:
                         totalProducts: 91
                       - discountType: percentage off
                         totalProducts: 4
-        '401':
+        "401":
           description: Unauthenticated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
               examples:
                 Example:
                   value:
                     message: Unauthenticated
-        '403':
+        "403":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
               examples:
                 Example:
                   value:
                     message: Unauthorized
-        '500':
+        "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
               examples:
                 Example:
                   value:
                     message: Internal Server Error
       servers:
-        - url: 'http://localhost:5001/api'
+        - url: "http://localhost:5001/api"
           description: Development server
 components:
   schemas:

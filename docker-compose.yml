@@ -6,7 +6,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - REACT_APP_API_URL=https://cat-couture-client-tbfp.onrender.com
+      - REACT_APP_API_URL=https://catcouture-g1og.onrender.com
     depends_on:
       - server
     volumes:
